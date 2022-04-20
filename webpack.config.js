@@ -11,6 +11,7 @@ module.exports = {
     resolve: {
         extensions: [".tsx", ".ts", ".js"],
     },
+    devtool: "source-map",
     module: {
         rules: [
             {
@@ -25,12 +26,17 @@ module.exports = {
             },
             {
                 test: /\.(css|scss)$/,
-                use: ["style-loader", "css-loader"],
+                use: ["style-loader", "css-loader", "sass-loader"],
             },
             {
                 test: /\.(jpg|jpeg|png|gif|mp3|svg)$/,
                 use: ["file-loader"],
             },
+            {
+                test: /\.(js|jsx)$/,
+                enforce: "pre",
+                use: ["source-map-loader"],
+              },
         ],
     },
     plugins: [

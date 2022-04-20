@@ -1,24 +1,60 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.scss';
+import { Button } from "antd";
+import { useEffect, useMemo, useState } from "react";
+import "./App.scss";
+import { UserInfo } from "./components/UserInfo";
+
+const plusFive = (num: number) => {
+  console.log("i was called!");
+  return num + 5;
+};
 
 function App() {
+  const [num, setNum] = useState(0);
+  const [light, setLight] = useState(true);
+
+  const [user, setUser] = useState({
+    name: "Cuong",
+    phone: {
+      home: 10101,
+      person: {
+        digit: 77,
+        country: "VN",
+      },
+    },
+  });
+  const numPlusFive = useMemo(() => plusFive(num), [num]);
+
+  useEffect(() => {
+    console.log("Vào");
+  }, [user]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Without useMemo</h1>
+      <h2>
+        Current number: {num}, Plus five: {numPlusFive}
+      </h2>
+
+      <Button onClick={() => setNum(num + 1)}>Update Number</Button>
+      <Button onClick={() => setLight(!light)}>Update Light</Button>
+      <Button
+        onClick={() =>
+          setUser({
+            ...user,
+            phone: {
+              ...user.phone,
+              person: {
+                ...user.phone.person,
+                country: "SG",
+              },
+            },
+          })
+        }
+      >
+        Test
+      </Button>
+      {user.phone.person.country}
+      <UserInfo user={user} />
     </div>
   );
 }
