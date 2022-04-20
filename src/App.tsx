@@ -53,7 +53,6 @@ function App() {
       >
         Test
       </Button>
-      {user.phone.person.country}
       <UserInfo user={user} />
     </div>
   );
